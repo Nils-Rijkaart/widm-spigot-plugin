@@ -9,7 +9,7 @@ class GamePlayerGui {
     companion object {
 
         fun open(game: Game, player: Player) {
-            val inventory = MoleGui("&6Spelers - ${game.name}", (game.slots.size % 9 + 1) * 9 + 9)
+            val inventory = MoleGui("&6Spelers - ${game.name}", 27)
 
             game.slots.forEach { entry ->
 

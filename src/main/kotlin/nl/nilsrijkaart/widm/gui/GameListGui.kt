@@ -28,6 +28,7 @@ class GameListGui {
             inventory.addItem(-1, Material.WRITABLE_BOOK, "&6Potje maken", listOf()) { clickEvent ->
                 clickEvent.isCancelled = true
                 GameService.createGame(player)
+                open(player)
             }
 
             inventory.open(player)

@@ -28,8 +28,9 @@ class GameGui {
             inventory.addItem(3, Material.RED_WOOL, "&cPotje stoppen", listOf()) { clickEvent ->
                 clickEvent.isCancelled = true
                 GameManager.game = null
-
             }
+
+            inventory.open(player)
         }
     }
 }

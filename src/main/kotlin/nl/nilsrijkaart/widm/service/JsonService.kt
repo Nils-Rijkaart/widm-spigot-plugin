@@ -28,17 +28,17 @@ class JsonService<T : Any>(val subPath: String, private val cls: Class<T>) {
     }
 
     fun save(t: T, name: String): T {
-        val directory = name.replace(name.split("/").last(), "")
-        File("data/$subPath/$directory").mkdirs()
-
-
-        val file = getFile(name)
-        file.createNewFile()
-
-        val jsonString = gson.toJson(t)
-
-
-        file.writeText(jsonString)
+//        val directory = name.replace(name.split("/").last(), "")
+//        File("data/$subPath/$directory").mkdirs()
+//
+//
+//        val file = getFile(name)
+//        file.createNewFile()
+//
+//        val jsonString = gson.toJson(t)
+//
+//
+//        file.writeText(jsonString)
         return t
     }
 
