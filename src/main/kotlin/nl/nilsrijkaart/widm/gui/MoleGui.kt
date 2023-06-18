@@ -26,14 +26,27 @@ class MoleGui(name: String, size: Int) {
         return itemStack
     }
 
-    fun addItem(material: Material, name: String, lore: List<String>, click: (event: InventoryClickEvent) -> Unit) {
+    fun addItem(
+        idx: Int = -1,
+        material: Material,
+        name: String,
+        lore: List<String>,
+        click: (event: InventoryClickEvent) -> Unit
+    ) {
         val itemStack = createItemStack(material, name, lore)
-        inventory.addItem(itemStack)
+        if (idx == -1) {
+            inventory.addItem(itemStack)
+        } else {
+            inventory.setItem(idx, itemStack)
+        }
         Bukkit.getPluginManager().registerEvents(object : org.bukkit.event.Listener {
+            // check performance
             @EventHandler
             fun onInventoryClick(event: InventoryClickEvent) {
                 if (event.inventory == inventory) {
-                    click(event)
+                    if (event.currentItem == itemStack) {
+                        click(event)
+                    }
                 }
             }
         }, Main.plugin)

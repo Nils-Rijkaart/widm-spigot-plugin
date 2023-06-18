@@ -1,38 +1,27 @@
 package nl.nilsrijkaart.widm.gui
 
-import nl.nilsrijkaart.widm.service.GameService
-import nl.nilsrijkaart.widm.util.formattedMessage
-import org.bukkit.Bukkit
+import nl.nilsrijkaart.widm.game.Game
 import org.bukkit.Material
 import org.bukkit.entity.Player
-import org.bukkit.inventory.Inventory
 
 class GameGui {
 
     companion object {
-        fun open(player: Player) {
-
-            val games = GameService.getGames(player)
-            val inventory = MoleGui("Games", (games.size % 9 + 1) * 9)
-
-            games.forEach {
-                val lore = mutableListOf<String>()
-                lore.add(formattedMessage("&7Hosts:"))
-                it.hosts.forEach { host ->
-                    lore.add(formattedMessage("&7- ${host.name}"))
-                }
-                inventory.addItem(Material.BOOK, "&6${it.name}", lore) { clickEvent ->
-                    clickEvent.isCancelled = true
-                }
-            }
-
-            inventory.addItem(Material.WRITABLE_BOOK, "&6Potje maken", listOf()) { clickEvent ->
+        fun open(game: Game, player: Player) {
+            val inventory = MoleGui("Game ${game.name}", 9)
+            inventory.addItem(0, Material.SKELETON_SKULL, "&6Spelers", listOf()) { clickEvent ->
                 clickEvent.isCancelled = true
-                GameService.createGame(player)
+//                PlayerListGui.open(game, player)
             }
 
-            inventory.open(player)
+            inventory.addItem(1, Material.BOOK, "&6Regels", listOf()) { clickEvent ->
+                clickEvent.isCancelled = true
+                GameRuleGui.openGui(game, player)
+            }
+
+            inventory.addItem(2, Material.GREEN_WOOL, "&aPotje starten", listOf()) { clickEvent ->
+                clickEvent.isCancelled = true
+            }
         }
     }
-
 }
