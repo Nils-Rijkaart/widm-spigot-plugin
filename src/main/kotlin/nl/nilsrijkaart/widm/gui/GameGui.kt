@@ -11,7 +11,7 @@ class GameGui {
             val inventory = MoleGui("Game ${game.name}", 9)
             inventory.addItem(0, Material.SKELETON_SKULL, "&6Spelers", listOf()) { clickEvent ->
                 clickEvent.isCancelled = true
-//                PlayerListGui.open(game, player)
+                GamePlayerGui.open(game, player)
             }
 
             inventory.addItem(1, Material.BOOK, "&6Regels", listOf()) { clickEvent ->

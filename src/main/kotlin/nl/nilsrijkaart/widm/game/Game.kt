@@ -13,8 +13,23 @@ class Game(val id: Int, var name: String) {
         GameRule.PK_DEATHNOTE to false
     )
 
-    fun save() {
+    var colors = mutableMapOf<GameColor, GameRole>()
+
+    fun addRole() {
+        val availableColor = GameColor.values().firstOrNull { !colors.containsKey(it) }
+        colors[availableColor!!] = GameRole.PLAYER
     }
 
+    fun updateRole(color: GameColor, role: GameRole) {
+        colors[color] = role
+    }
 
+    fun updateColor(former: GameColor) {
+        val nextColor = GameColor.values().filter { !colors.containsKey(it) }.random()
+        colors[nextColor] = colors[former]!!
+        colors.remove(former)
+    }
+
+    fun save() {
+    }
 }
