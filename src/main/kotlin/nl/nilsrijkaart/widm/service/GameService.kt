@@ -16,6 +16,10 @@ class GameService {
             gameService.save(game, game.id.toString())
         }
 
+        fun loadGame(id: Int): Game? {
+            return gameService.load(id.toString())
+        }
+
         fun getGames(player: Player): List<Game> = games.filter { it.hosts.contains(player) }
 
         fun createGame(player: Player) {

@@ -4,6 +4,7 @@ import nl.nilsrijkaart.widm.events.ChatEvent
 import nl.nilsrijkaart.widm.events.EventJoin
 import nl.nilsrijkaart.widm.events.PvpEvent
 import nl.nilsrijkaart.widm.game.GameCommand
+import nl.nilsrijkaart.widm.util.ScoreboardUtil
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -19,6 +20,12 @@ class Main : JavaPlugin() {
         Bukkit.getPluginManager().registerEvents(ChatEvent(), this)
         Bukkit.getPluginManager().registerEvents(PvpEvent(), this)
         getCommand("game")?.setExecutor(GameCommand())
-    }
 
+        // run every 5 seconds of the server
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, Runnable {
+            Bukkit.getOnlinePlayers().forEach {
+                ScoreboardUtil.updateScoreboard(it)
+            }
+        }, 0L, 6000L)
+    }
 }

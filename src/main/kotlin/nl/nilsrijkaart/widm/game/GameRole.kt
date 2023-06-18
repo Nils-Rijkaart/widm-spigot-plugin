@@ -2,7 +2,7 @@ package nl.nilsrijkaart.widm.game
 
 import org.bukkit.Material
 
-enum class GameColor(val displayName : String, val code : Char, val material : Material) {
+enum class GameColor(val displayName: String, val code: Char, val material: Material) {
     RED("Rood", 'c', Material.RED_WOOL),
     BLUE("Blauw", '9', Material.BLUE_WOOL),
     GREEN("Groen", 'a', Material.GREEN_WOOL),
@@ -15,6 +15,12 @@ enum class GameColor(val displayName : String, val code : Char, val material : M
     GRAY("Grijs", '7', Material.GRAY_WOOL)
 }
 
-enum class GameRole(val item : Material) {
-    MOLE(Material.DIAMOND_BLOCK), PLAYER(Material.GOLD_BLOCK), EGO(Material.SKELETON_SKULL)
+enum class GameRole(val item: Material) {
+    MOLE(Material.DIAMOND_BLOCK), PLAYER(Material.GOLD_BLOCK), EGO(Material.SKELETON_SKULL);
+
+    fun next() : GameRole {
+        val values = values()
+        val nextOrdinal = (ordinal + 1) % values.size
+        return values[nextOrdinal]
+    }
 }

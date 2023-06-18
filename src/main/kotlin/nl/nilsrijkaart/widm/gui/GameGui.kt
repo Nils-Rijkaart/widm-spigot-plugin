@@ -1,6 +1,7 @@
 package nl.nilsrijkaart.widm.gui
 
 import nl.nilsrijkaart.widm.game.Game
+import nl.nilsrijkaart.widm.game.GameManager
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
@@ -21,6 +22,13 @@ class GameGui {
 
             inventory.addItem(2, Material.GREEN_WOOL, "&aPotje starten", listOf()) { clickEvent ->
                 clickEvent.isCancelled = true
+                game.start()
+            }
+
+            inventory.addItem(3, Material.RED_WOOL, "&cPotje stoppen", listOf()) { clickEvent ->
+                clickEvent.isCancelled = true
+                GameManager.game = null
+
             }
         }
     }

@@ -1,5 +1,6 @@
 package nl.nilsrijkaart.widm.game
 
+import nl.nilsrijkaart.widm.service.GameService
 import org.bukkit.entity.Player
 
 class Game(val id: Int, var name: String) {
@@ -13,23 +14,42 @@ class Game(val id: Int, var name: String) {
         GameRule.PK_DEATHNOTE to false
     )
 
-    var colors = mutableMapOf<GameColor, GameRole>()
+    var slots = mutableListOf<GameSlot>()
 
     fun addRole() {
-        val availableColor = GameColor.values().firstOrNull { !colors.containsKey(it) }
-        colors[availableColor!!] = GameRole.PLAYER
+        val gameSlot = GameSlot(GameColor.values().filter {
+            slots.none { slot -> slot.color == it }
+        }.random(), GameRole.PLAYER)
+        slots.add(gameSlot)
+        save()
+    }
+
+    fun updateSlot(gameSlot: GameSlot) {
+        slots[slots.indexOfFirst { it.color == gameSlot.color }] = gameSlot
+        save()
     }
 
     fun updateRole(color: GameColor, role: GameRole) {
-        colors[color] = role
+        slots.find { it.color == color }?.role = role
+        save()
     }
 
     fun updateColor(former: GameColor) {
-        val nextColor = GameColor.values().filter { !colors.containsKey(it) }.random()
-        colors[nextColor] = colors[former]!!
-        colors.remove(former)
+        slots.find { it.color == former }?.color = GameColor.values().filter {
+            slots.none { slot -> slot.color == it }
+        }.random()
+        save()
+    }
+
+    fun getRole(player: Player): GameRole? {
+        return slots.find { it.player == player.uniqueId }?.role
+    }
+
+    fun start() {
+        GameManager.requestStart(this)
     }
 
     fun save() {
+        GameService.saveGame(this)
     }
 }

@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.7.21"
+    id("com.github.johnrengelman.shadow") version "7.1.1"
 }
 
 group = "nl.nilsrijkaart"
@@ -20,6 +21,9 @@ dependencies {
     implementation("org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT")
     //gson
     implementation("com.google.code.gson:gson:2.8.9")
+
+    //shadow
+
 }
 
 tasks.test {
