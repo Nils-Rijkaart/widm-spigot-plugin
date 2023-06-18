@@ -9,10 +9,17 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
+    maven("https://oss.sonatype.org/content/repositories/central")
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
 }
 
 dependencies {
     testImplementation(kotlin("test"))
+    //spigot
+    implementation("org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT")
+    //gson
+    implementation("com.google.code.gson:gson:2.8.9")
 }
 
 tasks.test {
