@@ -32,13 +32,11 @@ class InventoryCheck {
                     }
 
                     execute(it.player, target)
-
                 }
             }
         }
 
         fun execute(sender: Player, target: Player) {
-
 
         }
 
