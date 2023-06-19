@@ -29,7 +29,7 @@ class Main : JavaPlugin() {
             Bukkit.getOnlinePlayers().forEach {
                 ScoreboardUtil.updateScoreboard(it)
             }
-        }, 0L, 6000L)
+        }, 0L, 600L)
 
         DeathNote()
     }

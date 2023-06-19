@@ -26,6 +26,29 @@ class MoleGui(name: String, size: Int) {
         return itemStack
     }
 
+    fun addSkull(
+        idx: Int = -1,
+        userName: String,
+        displayName: String,
+        lore: List<String>,
+        enchanted : Boolean,
+        click: (event: InventoryClickEvent) -> Unit
+    ) {
+        val itemStack = createItemStack(Material.PLAYER_HEAD, displayName, lore)
+        val skullMeta = itemStack.itemMeta as org.bukkit.inventory.meta.SkullMeta
+        skullMeta.owningPlayer = Bukkit.getPlayer(userName)
+        skullMeta.isUnbreakable = true
+        if (enchanted) {
+            skullMeta.addEnchant(org.bukkit.enchantments.Enchantment.DURABILITY, 1, true)
+        }
+        itemStack.itemMeta = skullMeta
+        if (idx == -1) {
+            inventory.addItem(itemStack)
+        } else {
+            inventory.setItem(idx, itemStack)
+        }
+    }
+
     fun addItem(
         idx: Int = -1,
         material: Material,
