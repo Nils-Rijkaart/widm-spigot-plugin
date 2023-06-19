@@ -49,6 +49,7 @@ class GamePlayerEditGui {
                 game.updateSlot(gameSlot)
                 game.save()
                 player.closeInventory()
+                player.sendMessage(formattedMessage("&6Locatie is aangepast naar je huidige locatie."))
             }
 
             val tp = gameSlot.player
@@ -88,7 +89,7 @@ class GamePlayerEditGui {
             inventory.addItem(-1, Material.BARRIER, "&cVerwijder de rol", listOf("Verwijder de rol van deze speler")) {
                 game.slots.remove(gameSlot)
                 game.save()
-                player.closeInventory()
+                GamePlayerGui.open(game, player)
             }
 
             inventory.addItem(8, Material.LEVER, "&cTerug", listOf()) {

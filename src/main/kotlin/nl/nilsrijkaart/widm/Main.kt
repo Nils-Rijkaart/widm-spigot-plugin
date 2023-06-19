@@ -5,6 +5,7 @@ import nl.nilsrijkaart.widm.events.EventJoin
 import nl.nilsrijkaart.widm.events.PvpEvent
 import nl.nilsrijkaart.widm.game.GameCommand
 import nl.nilsrijkaart.widm.util.ScoreboardUtil
+import nl.nilsrijkaart.widm.util.gameUtil.DeathNote
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -27,5 +28,7 @@ class Main : JavaPlugin() {
                 ScoreboardUtil.updateScoreboard(it)
             }
         }, 0L, 6000L)
+
+        DeathNote()
     }
 }

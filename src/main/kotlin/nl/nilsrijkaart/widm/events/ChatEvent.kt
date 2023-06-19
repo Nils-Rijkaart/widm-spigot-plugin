@@ -10,10 +10,16 @@ import java.util.UUID
 class ChatEvent : Listener {
     @EventHandler
     fun chatEvent(event: AsyncPlayerChatEvent) {
-        if(hooks[event.player.uniqueId] != null) {
+
+        emptyHooks.forEach {
+            it.invoke(event)
+        }
+
+        if (hooks[event.player.uniqueId] != null) {
             event.isCancelled = true
             hooks[event.player.uniqueId]?.invoke(event)
             hooks.remove(event.player.uniqueId)
+
             return
         }
 
@@ -24,8 +30,13 @@ class ChatEvent : Listener {
 
     companion object {
         val hooks = mutableMapOf<UUID, (AsyncPlayerChatEvent) -> Unit>()
-        fun hookChat(uuid : UUID, cb : (event : AsyncPlayerChatEvent) -> Unit){
+        val emptyHooks = mutableListOf<(AsyncPlayerChatEvent) -> Unit>()
+        fun hookChat(uuid: UUID, cb: (event: AsyncPlayerChatEvent) -> Unit) {
             hooks[uuid] = cb
+        }
+
+        fun hookChat(cb: (event: AsyncPlayerChatEvent) -> Unit) {
+            emptyHooks.add(cb)
         }
     }
 }
