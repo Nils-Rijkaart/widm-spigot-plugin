@@ -50,8 +50,13 @@ class DeathNote {
                 sender.sendMessage(formattedMessage("&cJe hebt geen deathnote in je inventory."))
                 return
             }
-            item.amount -= 1
-            target.health = 0.0
+
+            try {
+                // possible async error
+                target.health = 0.0
+                item.amount -= 1
+            } catch (_: Exception) {
+            }
         }
 
 
