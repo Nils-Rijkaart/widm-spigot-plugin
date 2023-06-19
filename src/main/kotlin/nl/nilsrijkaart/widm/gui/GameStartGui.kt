@@ -10,16 +10,27 @@ class GameStartGui {
         fun open(player: Player, game: Game) {
             val inventory = MoleGui("Game ${game.name} starten", 27)
             Bukkit.getOnlinePlayers().forEach { gamePlayer ->
-                val predefined = game.slots.any {
-                    it.player == gamePlayer.uniqueId
+                val predefined = if (game.slots.any {
+                        it.player == gamePlayer.uniqueId
+                    }) {
+                    val color = game.slots.first { it.player == gamePlayer.uniqueId }.color
+                    listOf(
+                        "&aDeze speler is",
+                        "&agekoppeld aan de",
+                        "&akleur: &${color.code}${color.displayName}",
+                        "&aklik rechter muisknop",
+                        "&aom te ontkoppelen"
+                    )
+                } else {
+                    listOf("&cDeze speler zit", "&cop dit moment", "&cniet in het potje.")
                 }
 
-                inventory.addSkull(-1, gamePlayer.name, "&c${gamePlayer.name}", listOf(), predefined) { clickEvent ->
+                inventory.addSkull(-1, gamePlayer.name, "&c${gamePlayer.name}", predefined, false) { clickEvent ->
                     clickEvent.isCancelled = true
                     if (clickEvent.isRightClick) {
-                        if(predefined) {
-                            game.slots.first { it.player == gamePlayer.uniqueId }.player = null
-
+                        val slot = game.slots.firstOrNull { it.player == gamePlayer.uniqueId }
+                        if (slot != null) {
+                            slot.player = null
                         }
                     } else {
                         game.assignRandomRole(gamePlayer)

@@ -26,7 +26,7 @@ class GameColorCommand : CommandExecutor{
         sender.sendMessage("§6Kleuren:")
         slots.forEach {
             val roleNotion = if(GameManager.game!!.hosts.contains(sender)) { "(§7${it.role.displayName}§6)" } else { "" }
-            sender.sendMessage("§${it.color.code}${it.color.displayName}§f: ${it.player?.let {p -> Bukkit.getPlayer(p)?.name } ?: "§cGeen speler"} §8$roleNotion")
+            sender.sendMessage("§${it.color.code}${it.color.displayName}§f: ${it.player?.let {p -> Bukkit.getPlayer(p)?.name } ?: "§cGeen speler"} §6$roleNotion")
         }
 
         return true

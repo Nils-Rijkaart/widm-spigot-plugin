@@ -28,6 +28,8 @@ class GameGui {
             inventory.addItem(3, Material.RED_WOOL, "&cPotje stoppen", listOf()) { clickEvent ->
                 clickEvent.isCancelled = true
                 GameManager.game = null
+                player.closeInventory()
+                player.sendMessage("§cHet potje is gestopt.")
             }
 
 
