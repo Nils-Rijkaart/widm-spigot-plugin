@@ -7,4 +7,5 @@ enum class GameRule(val displayName : String, val description : List<String>, va
     PVP("&4PVP", listOf("&cZet PVP aan of uit"), Material.IRON_SWORD),
     PK_DEATHNOTE("&4PK Deathnote", listOf("&cAan betekent dat", "&cde peacekeeper", "&cgedeathnote kan worden"), Material.BOOK),
     MSG("&4MSG", listOf("&cAan betekent dat", "&cspelers elkaar onderling", "&ckunnen msg'en"), Material.PAPER),
+    AUTO_UTIL("&4Auto util", listOf("&cAan betekent dat", "&cutilities zoals een", "&cdeathnote automatisch", "&cuitgevoerd worden"), Material.REDSTONE),
 }

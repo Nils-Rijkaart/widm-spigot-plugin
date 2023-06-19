@@ -11,7 +11,8 @@ class Game(val id: Int, var name: String) {
     var rules = mutableMapOf(
         GameRule.PVP to true,
         GameRule.MSG to false,
-        GameRule.PK_DEATHNOTE to false
+        GameRule.PK_DEATHNOTE to false,
+        GameRule.AUTO_UTIL to true
     )
 
     var slots = mutableListOf<GameSlot>()
