@@ -40,11 +40,7 @@ class DeathNote {
             }
 
             target.health = 0.0
-            sender.inventory.first {
-                it?.itemMeta?.displayName == "Deathnote"
-            }?.let {
-                it.amount -= 1
-            }
+            item.amount -= 1
         }
 
 

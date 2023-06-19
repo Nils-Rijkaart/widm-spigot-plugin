@@ -8,6 +8,7 @@ import org.bukkit.entity.Player
 
 class GameCommand : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
+        if (command.name != "game") return true
         if (sender is Player) {
             if (!sender.hasPermission("widm.host")) return true
             GameListGui.open(sender)

@@ -10,3 +10,7 @@ commands:
     description: Start een nieuw spel
     usage: /<command>
     aliases: [widm, widmgame]
+  gameutil:
+    description: Ontvang game utils
+    usage: /<command>
+    aliases: [widmutil, widmgameutil]
