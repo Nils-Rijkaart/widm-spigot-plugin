@@ -30,6 +30,12 @@ class GameGui {
                 GameManager.game = null
             }
 
+
+            inventory.addItem(8, Material.LEVER, "&cTerug", listOf()) { clickEvent ->
+                clickEvent.isCancelled = true
+                GameListGui.open(player)
+            }
+
             inventory.open(player)
         }
     }

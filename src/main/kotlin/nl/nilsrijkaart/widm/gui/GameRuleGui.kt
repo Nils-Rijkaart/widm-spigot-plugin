@@ -8,13 +8,13 @@ class GameRuleGui {
     companion object {
 
         fun openGui(game: Game, player: Player) {
-            val inventory = MoleGui("&6Regels - ${game.name}", 2 * 9)
+            val inventory = MoleGui("&6Regels - ${game.name}", 3 * 9)
             game.rules.onEachIndexed { index, entry ->
                 inventory.addItem(
                     index,
                     entry.key.material,
-                    "&6${entry.key.name}",
-                    listOf("&7${entry.key.description}")
+                    "&6${entry.key.displayName}",
+                    entry.key.description
                 ) { clickEvent ->
                     clickEvent.isCancelled = true
                 }
@@ -23,12 +23,17 @@ class GameRuleGui {
                         Material.GREEN_WOOL
                     } else {
                         Material.RED_WOOL
-                    }, "&6${entry.key.name}", listOf("&7${entry.key.description}")
+                    }, "&6${entry.key.name}", entry.key.description
                 ) { clickEvent ->
                     clickEvent.isCancelled = true
                     game.rules[entry.key] = !game.rules[entry.key]!!
                     openGui(game, player)
                 }
+            }
+
+            inventory.addItem(26, Material.LEVER, "&cTerug", listOf()) { clickEvent ->
+                clickEvent.isCancelled = true
+                GameGui.open(game, player)
             }
 
             inventory.open(player)

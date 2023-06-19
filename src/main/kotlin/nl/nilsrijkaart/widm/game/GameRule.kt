@@ -2,9 +2,9 @@ package nl.nilsrijkaart.widm.game
 
 import org.bukkit.Material
 
-enum class GameRule(val displayName : String, val description : String, val material : Material) {
+enum class GameRule(val displayName : String, val description : List<String>, val material : Material) {
 
-    PVP("&4PVP", "&cZet PVP aan of uit", Material.IRON_SWORD),
-    PK_DEATHNOTE("&4PK Deathnote", "&cAan betekent dat de PK gedeathnote kan worden.", Material.BOOK),
-    MSG("&4MSG", "&cAan betekent dat spelers onderling berichten kunnen sturen.", Material.PAPER),
+    PVP("&4PVP", listOf("&cZet PVP aan of uit"), Material.IRON_SWORD),
+    PK_DEATHNOTE("&4PK Deathnote", listOf("&cAan betekent dat", "&cde peacekeeper", "&cgedeathnote kan worden"), Material.BOOK),
+    MSG("&4MSG", listOf("&cAan betekent dat", "&cspelers elkaar onderling", "&ckunnen msg'en"), Material.PAPER),
 }

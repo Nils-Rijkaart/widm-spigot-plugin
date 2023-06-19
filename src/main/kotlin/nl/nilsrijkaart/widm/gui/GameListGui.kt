@@ -11,7 +11,7 @@ class GameListGui {
         fun open(player: Player) {
 
             val games = GameService.getGames(player)
-            val inventory = MoleGui("Games", (games.size % 9 + 1) * 9)
+            val inventory = MoleGui("Games", 27)
 
             games.forEach {
                 val lore = mutableListOf<String>()

@@ -91,6 +91,11 @@ class GamePlayerEditGui {
                 player.closeInventory()
             }
 
+            inventory.addItem(8, Material.LEVER, "&cTerug", listOf()) {
+                player.closeInventory()
+                GamePlayerGui.open(game, player)
+            }
+
             inventory.open(player)
         }
 
