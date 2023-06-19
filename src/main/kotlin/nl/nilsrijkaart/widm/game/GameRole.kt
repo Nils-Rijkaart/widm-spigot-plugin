@@ -15,8 +15,8 @@ enum class GameColor(val displayName: String, val code: Char, val material: Mate
     GRAY("Grijs", '7', Material.GRAY_WOOL)
 }
 
-enum class GameRole(val item: Material) {
-    MOLE(Material.DIAMOND_BLOCK), PLAYER(Material.GOLD_BLOCK), EGO(Material.SKELETON_SKULL);
+enum class GameRole(val displayName : String, val item: Material) {
+    MOLE("Mol", Material.DIAMOND_BLOCK), PLAYER("Speler", Material.GOLD_BLOCK), EGO("Egoïst", Material.SKELETON_SKULL);
 
     fun next() : GameRole {
         val values = values()

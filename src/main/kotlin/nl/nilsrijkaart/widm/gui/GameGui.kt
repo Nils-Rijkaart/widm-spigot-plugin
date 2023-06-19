@@ -22,7 +22,7 @@ class GameGui {
 
             inventory.addItem(2, Material.GREEN_WOOL, "&aPotje starten", listOf()) { clickEvent ->
                 clickEvent.isCancelled = true
-                game.start()
+                GameStartGui.open(player, game)
             }
 
             inventory.addItem(3, Material.RED_WOOL, "&cPotje stoppen", listOf()) { clickEvent ->

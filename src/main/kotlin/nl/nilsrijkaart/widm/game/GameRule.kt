@@ -9,4 +9,5 @@ enum class GameRule(val displayName : String, val description : List<String>, va
     MSG("&4MSG", listOf("&cAan betekent dat", "&cspelers elkaar onderling", "&ckunnen msg'en"), Material.PAPER),
     AUTO_UTIL("&4Auto util", listOf("&cAan betekent dat", "&cutilities zoals een", "&cdeathnote automatisch", "&cuitgevoerd worden"), Material.REDSTONE),
     DEATH_MESSAGE("&4Death message", listOf("&cAan betekent dat", "&cspelers een death message", "&ckrijgen als ze doodgaan"), Material.SKELETON_SKULL),
+    COLORS_COMMAND("&4Kleuren command", listOf("&cAan betekent dat", "&cspelers het", "&ckleuren command", "&ckunnen gebruiken"), Material.COMMAND_BLOCK),
 }

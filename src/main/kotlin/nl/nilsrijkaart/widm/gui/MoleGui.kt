@@ -26,6 +26,8 @@ class MoleGui(name: String, size: Int) {
         return itemStack
     }
 
+
+    // deduplicate this method
     fun addSkull(
         idx: Int = -1,
         userName: String,
@@ -47,6 +49,19 @@ class MoleGui(name: String, size: Int) {
         } else {
             inventory.setItem(idx, itemStack)
         }
+
+        Bukkit.getPluginManager().registerEvents(object : org.bukkit.event.Listener {
+            // check performance
+            @EventHandler
+            fun onInventoryClick(event: InventoryClickEvent) {
+                if (event.inventory == inventory) {
+                    if (event.currentItem == itemStack) {
+                        click(event)
+                    }
+                }
+            }
+        }, Main.plugin)
+
     }
 
     fun addItem(

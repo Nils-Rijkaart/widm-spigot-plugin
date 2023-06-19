@@ -15,7 +15,7 @@ class GamePlayerGui {
             game.slots.forEach { entry ->
 
                 val lore = listOf(
-                    "&6Rol: &7${entry.role.name}",
+                    "&6Rol: &7${entry.role.displayName}",
                     "&6Kleur: &7${entry.color.displayName}",
                     "&6Locatie: &7${
                         if (entry.location == null) "Niet ingesteld" else "Ingesteld"

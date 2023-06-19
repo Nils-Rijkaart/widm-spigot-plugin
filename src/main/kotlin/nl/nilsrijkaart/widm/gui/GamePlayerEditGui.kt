@@ -17,7 +17,7 @@ class GamePlayerEditGui {
 
 
             // role item
-            inventory.addItem(-1, gameSlot.role.item, "&6Rol: &7${gameSlot.role.name}", listOf()) {
+            inventory.addItem(-1, gameSlot.role.item, "&6Rol: &7${gameSlot.role.displayName}", listOf()) {
                 it.isCancelled = true
                 // get next role:
                 val nextRole = gameSlot.role.next()

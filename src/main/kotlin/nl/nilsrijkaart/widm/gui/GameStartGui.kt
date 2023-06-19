@@ -2,6 +2,7 @@ package nl.nilsrijkaart.widm.gui
 
 import nl.nilsrijkaart.widm.game.Game
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.entity.Player
 
 class GameStartGui {
@@ -13,16 +14,33 @@ class GameStartGui {
                     it.player == gamePlayer.uniqueId
                 }
 
-                val randomSlots = game.slots.filter { it.player == null }
-                var filledSlots = 0
-                inventory.addSkull(-1, gamePlayer.name, "&6${gamePlayer.name}", listOf(), predefined) { clickEvent ->
+                inventory.addSkull(-1, gamePlayer.name, "&c${gamePlayer.name}", listOf(), predefined) { clickEvent ->
                     clickEvent.isCancelled = true
-                    if (!predefined) {
+                    if (clickEvent.isRightClick) {
+                        if(predefined) {
+                            game.slots.first { it.player == gamePlayer.uniqueId }.player = null
 
+                        }
+                    } else {
+                        game.assignRandomRole(gamePlayer)
                     }
                     open(player, game)
                 }
             }
+
+            inventory.addItem(25, Material.COMMAND_BLOCK, "&aStarten", listOf()) { clickEvent ->
+                clickEvent.isCancelled = true
+                game.start()
+            }
+
+            inventory.addItem(26, Material.LEVER, "&cTerug", listOf()) { clickEvent ->
+                clickEvent.isCancelled = true
+                GameGui.open(game, player)
+            }
+
+
+
+            inventory.open(player)
         }
     }
 }

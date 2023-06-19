@@ -56,7 +56,7 @@ class ScoreboardUtil {
             val isActive = scoreboard.getTeam("widm_active")
             isActive?.prefix = formattedMessage(if (GameManager.game != null) "&aJa" else "&cNee")
             val roleTeam = scoreboard.getTeam("widm_role")
-            roleTeam?.prefix = formattedMessage("&f${GameManager.game?.getRole(player)?.name ?: "&7N/A"}")
+            roleTeam?.prefix = formattedMessage("&f${GameManager.game?.getRole(player)?.displayName ?: "&7N/A"}")
         }
     }
 

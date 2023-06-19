@@ -23,7 +23,7 @@ class GameRuleGui {
                         Material.GREEN_WOOL
                     } else {
                         Material.RED_WOOL
-                    }, "&6${entry.key.name}", entry.key.description
+                    }, "&6${entry.key.displayName}", entry.key.description
                 ) { clickEvent ->
                     clickEvent.isCancelled = true
                     game.rules[entry.key] = !game.rules[entry.key]!!
