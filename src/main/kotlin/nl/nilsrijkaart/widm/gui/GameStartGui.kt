@@ -33,6 +33,10 @@ class GameStartGui {
                             slot.player = null
                         }
                     } else {
+                        if(game.slots.any { it.player == gamePlayer.uniqueId }) {
+                            player.sendMessage("§cDeze speler zit al in het potje.")
+                            return@addSkull
+                        }
                         game.assignRandomRole(gamePlayer)
                     }
                     open(player, game)
