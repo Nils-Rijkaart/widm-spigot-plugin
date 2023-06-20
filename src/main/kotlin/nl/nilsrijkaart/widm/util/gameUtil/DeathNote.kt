@@ -3,6 +3,7 @@ package nl.nilsrijkaart.widm.util.gameUtil
 import nl.nilsrijkaart.widm.Main
 import nl.nilsrijkaart.widm.events.ChatEvent
 import nl.nilsrijkaart.widm.game.GameManager
+import nl.nilsrijkaart.widm.game.GameRole
 import nl.nilsrijkaart.widm.game.GameRule
 import nl.nilsrijkaart.widm.util.BookUtil
 import nl.nilsrijkaart.widm.util.formattedMessage
@@ -50,6 +51,12 @@ class DeathNote {
             }
             if (item == null) {
                 sender.sendMessage(formattedMessage("&cJe hebt geen deathnote in je inventory."))
+                return
+            }
+
+            val targetRole = GameManager.game?.getRole(target)
+            if (targetRole == GameRole.PEACE_KEEPER && GameManager.game?.rules?.get(GameRule.PK_DEATHNOTE) == false) {
+                sender.sendMessage(formattedMessage("&cJe mag geen peacekeeper deathnoten."))
                 return
             }
 

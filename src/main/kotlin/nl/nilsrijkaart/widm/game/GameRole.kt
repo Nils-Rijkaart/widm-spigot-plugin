@@ -15,10 +15,15 @@ enum class GameColor(val displayName: String, val code: Char, val material: Mate
     GRAY("Grijs", '7', Material.GRAY_WOOL)
 }
 
-enum class GameRole(val displayName : String, val item: Material) {
-    MOLE("Mol", Material.DIAMOND_BLOCK), PLAYER("Speler", Material.GOLD_BLOCK), EGO("Egoïst", Material.SKELETON_SKULL);
+enum class GameRole(val displayName: String, val item: Material) {
+    MOLE("Mol", Material.DIAMOND_BLOCK), PLAYER("Speler", Material.GOLD_BLOCK), EGO(
+        "Egoïst",
+        Material.SKELETON_SKULL
+    ),
+    PEACE_KEEPER("Peacekeeper", Material.GOLD_NUGGET);
 
-    fun next() : GameRole {
+
+    fun next(): GameRole {
         val values = values()
         val nextOrdinal = (ordinal + 1) % values.size
         return values[nextOrdinal]
