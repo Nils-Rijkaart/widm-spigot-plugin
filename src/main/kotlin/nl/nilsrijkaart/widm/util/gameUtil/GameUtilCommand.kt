@@ -10,15 +10,17 @@ class GameUtilCommand : CommandExecutor {
         if (command.name != "gameutil") return true
         if (sender is Player) {
             if (args.isEmpty()) {
-                sender.sendMessage("§cUsage: /gameutil <util> (deathnote, inventorycheck, msg)")
-            } else if(args[0].lowercase() == "deathnote") {
+                sender.sendMessage("§cUsage: /gameutil <util> (deathnote, inventorycheck, msg, revive)")
+            } else if (args[0].lowercase() == "deathnote") {
                 DeathNote.give(sender)
-            } else if(args[0].lowercase() == "inventorycheck") {
+            } else if (args[0].lowercase() == "inventorycheck") {
                 InventoryCheck.give(sender)
-            } else if(args[0].lowercase() == "msg") {
+            } else if (args[0].lowercase() == "msg") {
                 MsgUtil.give(sender)
+            } else if (args[0].lowercase() == "revive") {
+                ReviveUtil.give(sender)
             } else {
-                sender.sendMessage("§cUsage: /gameutil <util> (deathnote, inventorycheck, msg)")
+                sender.sendMessage("§cUsage: /gameutil <util> (deathnote, inventorycheck, msg, revive)")
             }
         }
         return true
