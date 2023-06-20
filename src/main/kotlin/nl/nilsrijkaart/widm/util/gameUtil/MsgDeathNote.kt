@@ -64,6 +64,9 @@ class MsgDeathNote {
 
             item.amount -= 1
             Main.deathRequest.add(target)
+            GameManager.game?.hosts?.forEach {
+                Bukkit.getPlayer(it)?.sendMessage(formattedMessage("&c${sender.name} heeft een msg deathnote gebruikt op ${target.name}"))
+            }
         }
 
 
