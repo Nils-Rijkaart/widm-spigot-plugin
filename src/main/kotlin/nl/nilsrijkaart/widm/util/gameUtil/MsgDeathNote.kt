@@ -3,29 +3,29 @@ package nl.nilsrijkaart.widm.util.gameUtil
 import nl.nilsrijkaart.widm.Main
 import nl.nilsrijkaart.widm.events.ChatEvent
 import nl.nilsrijkaart.widm.game.GameManager
+import nl.nilsrijkaart.widm.game.GameRole
 import nl.nilsrijkaart.widm.game.GameRule
 import nl.nilsrijkaart.widm.util.BookUtil
 import nl.nilsrijkaart.widm.util.formattedMessage
 import org.bukkit.Bukkit
-import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import org.bukkit.inventory.meta.BookMeta
 import kotlin.random.Random
 
-class ReviveUtil {
-
+class MsgDeathNote {
     companion object {
         init {
             ChatEvent.hookChat {
                 val player = it.player
                 val message = it.message
-                if (message.lowercase().startsWith("revive")) {
+                if (message.lowercase().startsWith("msg deathnote") || message.lowercase().startsWith("msg death note")) {
+                    it.isCancelled = true
                     if (GameManager.game?.rules?.get(GameRule.AUTO_UTIL) != true) {
                         return@hookChat
                     }
 
                     if (it.message.split(" ").size < 2) {
-                        player.sendMessage(formattedMessage("&cGebruik revive <speler>"))
+                        player.sendMessage(formattedMessage("&cGebruik msg deathnote <speler>"))
                         return@hookChat
                     }
 
@@ -34,49 +34,46 @@ class ReviveUtil {
                         player.sendMessage(formattedMessage("&cDeze speler bestaat niet."))
                         return@hookChat
                     }
+                    //TODO: check if player is alive & in game
+
                     execute(player, target)
                 }
             }
         }
 
         private fun execute(sender: Player, target: Player) {
-
             val item = sender.inventory.find {
                 if (it?.itemMeta is BookMeta?) {
                     val bookMeta = it?.itemMeta as BookMeta?
-                    bookMeta?.title == "Revive"
+                    bookMeta?.title == "MSG Deathnote"
                 } else {
                     false
                 }
             }
             if (item == null) {
-                sender.sendMessage(formattedMessage("&cJe hebt geen revive in je inventory."))
+                sender.sendMessage(formattedMessage("&cJe hebt geen msg deathnote in je inventory."))
                 return
             }
 
-            if (GameManager.game?.getRole(target) == null) {
-                sender.sendMessage(formattedMessage("&cDie speler zit niet in het potje."))
+            val targetRole = GameManager.game?.getRole(target)
+            if (targetRole == GameRole.PEACE_KEEPER && GameManager.game?.rules?.get(GameRule.PK_DEATHNOTE) == false) {
+                sender.sendMessage(formattedMessage("&cJe mag geen peacekeeper deathnoten."))
                 return
             }
 
-            if (target.gameMode != GameMode.SPECTATOR && target.gameMode != GameMode.CREATIVE) {
-                sender.sendMessage(formattedMessage("&cDeze speler is niet dood."))
-                return
-            }
 
-            target.sendMessage(formattedMessage("&aJe bent weer tot leven gewekt door ${sender.displayName}"))
-            sender.sendMessage(formattedMessage("&aJe hebt ${target.displayName} weer tot leven gewekt."))
             item.amount -= 1
-            Main.reviveRequest.add(Pair(target, sender))
+            Main.deathRequest.add(target)
         }
+
 
         fun give(player: Player) {
             player.inventory.addItem(
                 BookUtil.createBook(
-                    "Revive",
+                    "MSG Deathnote",
                     "Spelmaker",
                     listOf(
-                        "Dit is een Revive. Breng hiermee iemand terug uit de dood. Gebruik revive <spelernaam>",
+                        "Dit is een deathnote. Gebruik deze deathnote om een speler direct dood te maken. Je gebruikt dit boekje door in chat te typen: msg deathnote <spelernaam>. Let op! Geen slash voor het command.",
                         "ID: ${
                             Random.nextInt(10000, 99999)
                         }"
@@ -84,8 +81,5 @@ class ReviveUtil {
                 )
             )
         }
-
-
     }
-
 }

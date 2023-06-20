@@ -18,7 +18,7 @@ class Main : JavaPlugin() {
     companion object {
         lateinit var plugin: JavaPlugin
         val deathRequest = mutableListOf<Player>()
-        val reviveRequest = mutableListOf<Player>()
+        val reviveRequest = mutableListOf<Pair<Player, Player>>()
         val teleportRequests = mutableMapOf<Player, Player>()
     }
 
@@ -43,12 +43,14 @@ class Main : JavaPlugin() {
             }
 
             reviveRequest.forEach {
-                it.health = 20.0
+                it.first.health = 20.0
                 reviveRequest.remove(it)
 
-                it.gameMode = GameMode.SURVIVAL
-                it.health = 20.0
-                it.foodLevel = 20
+                it.first.gameMode = GameMode.SURVIVAL
+                it.first.health = 20.0
+                it.first.foodLevel = 20
+                it.first.inventory.clear()
+                it.first.teleport(it.second)
             }
 
             teleportRequests.forEach { (player, target) ->
@@ -65,5 +67,6 @@ class Main : JavaPlugin() {
         InventoryCheck()
         TeleportUtil()
         ReviveUtil()
+        MsgDeathNote()
     }
 }
