@@ -78,8 +78,8 @@ class GameGui {
             inventory.addItem(6, Material.BARRIER, "&cPotje verwijderen", listOf()) {clickEvent ->
                 clickEvent.isCancelled = true
                 GameService.deleteGame(game)
-                player.closeInventory()
                 Bukkit.broadcastMessage("§cHet potje is verwijderd.")
+                GameListGui.open(player)
             }
 
 
