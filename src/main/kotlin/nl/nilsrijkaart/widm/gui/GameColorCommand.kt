@@ -6,10 +6,12 @@ import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 
 class GameColorCommand : CommandExecutor{
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if(command.name != "kleuren") return true
+        if(sender !is Player) return true
 
         if(GameManager.game == null) {
             sender.sendMessage("§cEr is geen spel bezig!")
@@ -25,7 +27,7 @@ class GameColorCommand : CommandExecutor{
 
         sender.sendMessage("§6Kleuren:")
         slots.forEach {
-            val roleNotion = if(GameManager.game!!.hosts.contains(sender)) { "(§7${it.role.displayName}§6)" } else { "" }
+            val roleNotion = if(GameManager.game!!.hosts.contains(sender.uniqueId)) { "(§7${it.role.displayName}§6)" } else { "" }
             sender.sendMessage("§${it.color.code}${it.color.displayName}§f: ${it.player?.let {p -> Bukkit.getPlayer(p)?.name } ?: "§cGeen speler"} §6$roleNotion")
         }
 

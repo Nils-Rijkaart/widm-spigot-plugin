@@ -3,6 +3,7 @@ package nl.nilsrijkaart.widm.gui
 import nl.nilsrijkaart.widm.events.ChatEvent
 import nl.nilsrijkaart.widm.game.Game
 import nl.nilsrijkaart.widm.game.GameSlot
+import nl.nilsrijkaart.widm.game.LocationData
 import nl.nilsrijkaart.widm.util.formattedMessage
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -45,7 +46,7 @@ class GamePlayerEditGui {
                 "&aZet de locatie",
                 listOf("Verander de locatie naar je huidige plek")
             ) {
-                gameSlot.location = player.location
+                gameSlot.location = LocationData(player.location.world?.name?: "world", player.location.x, player.location.y, player.location.z, player.location.yaw, player.location.pitch)
                 game.updateSlot(gameSlot)
                 game.save()
                 player.closeInventory()

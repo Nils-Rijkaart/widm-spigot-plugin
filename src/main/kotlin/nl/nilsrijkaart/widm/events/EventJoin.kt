@@ -3,6 +3,7 @@ package nl.nilsrijkaart.widm.events
 import nl.nilsrijkaart.widm.game.GameManager
 import nl.nilsrijkaart.widm.util.ScoreboardUtil
 import nl.nilsrijkaart.widm.util.formattedMessage
+import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
@@ -17,7 +18,7 @@ class EventJoin : Listener {
 
         event.joinMessage = if (GameManager.game != null) {
             GameManager.game?.hosts?.forEach {
-                it.sendMessage(formattedMessage("&a[&2&l+&a] &2${event.player.name}"))
+                Bukkit.getPlayer(it)?.sendMessage(formattedMessage("&a[&2&l+&a] &2${event.player.name}"))
             }
             ""
         } else {
@@ -29,7 +30,7 @@ class EventJoin : Listener {
     fun quitEvent(event: PlayerQuitEvent) {
         event.quitMessage = if (GameManager.game != null) {
             GameManager.game?.hosts?.forEach {
-                it.sendMessage(formattedMessage("&4[&c&l-&4] &c${event.player.name}"))
+                Bukkit.getPlayer(it)?.sendMessage(formattedMessage("&4[&c&l-&4] &c${event.player.name}"))
             }
             ""
         } else {

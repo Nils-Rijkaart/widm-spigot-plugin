@@ -20,7 +20,7 @@ dependencies {
     //spigot
     implementation("org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT")
     //gson
-    implementation("com.google.code.gson:gson:2.8.9")
+    implementation("com.google.code.gson:gson")
 
     //shadow
 

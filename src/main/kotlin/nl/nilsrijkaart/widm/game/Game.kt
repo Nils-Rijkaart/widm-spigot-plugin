@@ -2,12 +2,14 @@ package nl.nilsrijkaart.widm.game
 
 import nl.nilsrijkaart.widm.service.GameService
 import nl.nilsrijkaart.widm.util.formattedMessage
+import nl.nilsrijkaart.widm.util.locationDataToSpigotLocation
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+import java.util.UUID
 
 class Game(val id: Int, var name: String) {
 
-    var hosts: List<Player> = listOf()
+    var hosts: MutableList<UUID> = mutableListOf()
 
     //default settings, otherwise loaded from json
     var rules = mutableMapOf(
@@ -66,10 +68,10 @@ class Game(val id: Int, var name: String) {
                 if (it.player != null) {
                     val player = Bukkit.getPlayer(it.player!!)
                     if (it.location != null) {
-                        player?.teleport(it.location!!)
+                        player?.teleport(locationDataToSpigotLocation(it.location!!))
                     } else {
                         hosts.forEach { host ->
-                            host.sendMessage("§c${Bukkit.getPlayer(it.player!!)?.name} heeft geen spawnpoint!")
+                            Bukkit.getPlayer(host)?.sendMessage("§c${Bukkit.getPlayer(it.player!!)?.name} heeft geen spawnpoint!")
                         }
                     }
                     
@@ -78,11 +80,11 @@ class Game(val id: Int, var name: String) {
             }
 
             hosts.forEach {
-                it.sendMessage(formattedMessage("&6De startprocedure is voltooid."))
+                Bukkit.getPlayer(it)?.sendMessage(formattedMessage("&6De startprocedure is voltooid."))
             }
         } else {
             hosts.forEach {
-                it.sendMessage(formattedMessage("&cHet potje kan niet gestart worden omdat er een actief potje van ${GameManager.game?.hosts?.first()?.name} is. Vraag dit persoon het potje te stoppen."))
+                Bukkit.getPlayer(it)?.sendMessage(formattedMessage("&cHet potje kan niet gestart worden omdat er een actief potje is."))
             }
         }
     }

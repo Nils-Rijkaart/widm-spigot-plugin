@@ -2,6 +2,7 @@ package nl.nilsrijkaart.widm.util.gameUtil
 
 import nl.nilsrijkaart.widm.game.GameManager
 import nl.nilsrijkaart.widm.util.BookUtil
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.meta.BookMeta
 import kotlin.random.Random
@@ -32,7 +33,7 @@ class MsgUtil {
             item.amount -= 1
             sendMsg(sender, receiver, message)
             GameManager.game?.hosts?.forEach {
-                it.sendMessage("§7[§cMSG§7] §f${sender.name} §7-> §f${receiver.name}: §f$message §7(via MSG util)")
+                Bukkit.getPlayer(it)?.sendMessage("§7[§cMSG§7] §f${sender.name} §7-> §f${receiver.name}: §f$message §7(via MSG util)")
             }
         }
 

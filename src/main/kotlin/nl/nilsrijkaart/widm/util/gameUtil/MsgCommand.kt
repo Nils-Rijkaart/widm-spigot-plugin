@@ -26,7 +26,7 @@ class MsgCommand : CommandExecutor {
         if (GameManager.game != null) {
 
 
-            if (GameManager.game!!.hosts.contains(sender) || GameManager.game!!.hosts.contains(receiver)) {
+            if (GameManager.game!!.hosts.contains(sender.uniqueId) || GameManager.game!!.hosts.contains(receiver.uniqueId)) {
                 MsgUtil.sendMsg(sender, receiver, message)
                 return true
             }

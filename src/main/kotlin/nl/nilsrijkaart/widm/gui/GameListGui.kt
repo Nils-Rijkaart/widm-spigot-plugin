@@ -2,6 +2,7 @@ package nl.nilsrijkaart.widm.gui
 
 import nl.nilsrijkaart.widm.service.GameService
 import nl.nilsrijkaart.widm.util.formattedMessage
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
@@ -17,7 +18,7 @@ class GameListGui {
                 val lore = mutableListOf<String>()
                 lore.add(formattedMessage("&7Hosts:"))
                 it.hosts.forEach { host ->
-                    lore.add(formattedMessage("&7- ${host.name}"))
+                    lore.add(formattedMessage("&7- ${Bukkit.getOfflinePlayer(host).name}"))
                 }
                 inventory.addItem(-1, Material.BOOK, "&6${it.name}", lore) { clickEvent ->
                     clickEvent.isCancelled = true

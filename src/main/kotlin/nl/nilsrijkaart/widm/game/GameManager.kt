@@ -10,7 +10,7 @@ class GameManager {
         fun requestStart(game: Game): Boolean {
             if (this.game != null) {
                 if (Bukkit.getOnlinePlayers().any {
-                        this.game!!.hosts.contains(it)
+                        this.game!!.hosts.contains(it.uniqueId)
                     }) {
                     return false;
                 }
