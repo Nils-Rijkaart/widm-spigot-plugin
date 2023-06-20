@@ -12,72 +12,65 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.meta.BookMeta
 import kotlin.random.Random
 
-class ReviveUtil {
-
+class TeleportUtil {
     companion object {
         init {
             ChatEvent.hookChat {
                 val player = it.player
                 val message = it.message
-                if (message.lowercase().startsWith("revive")) {
+                if(message.split(" ").size < 4) return@hookChat
+                if ((message.lowercase().startsWith("teleport") || message.lowercase().startsWith("tp")) && message.split(" ")[2].lowercase() == "naar") {
                     if (GameManager.game?.rules?.get(GameRule.AUTO_UTIL) != true) {
                         return@hookChat
                     }
 
-                    if (it.message.split(" ").size < 2) {
-                        player.sendMessage(formattedMessage("&cGebruik revive <speler>"))
-                        return@hookChat
-                    }
-
                     val target = Bukkit.getPlayer(message.split(" ")[1])
-                    if (target == null) {
+                    val secondTarget = Bukkit.getPlayer(message.split(" ")[3])
+                    if (target == null || secondTarget == null) {
                         player.sendMessage(formattedMessage("&cDeze speler bestaat niet."))
                         return@hookChat
                     }
-                    execute(player, target)
+                    execute(player, target, secondTarget)
                 }
             }
         }
 
-        private fun execute(sender: Player, target: Player) {
+        private fun execute(sender: Player, target: Player, secondTarget: Player) {
 
             val item = sender.inventory.find {
                 if (it?.itemMeta is BookMeta?) {
                     val bookMeta = it?.itemMeta as BookMeta?
-                    bookMeta?.title == "Revive"
+                    bookMeta?.title == "Teleport"
                 } else {
                     false
                 }
             }
             if (item == null) {
-                sender.sendMessage(formattedMessage("&cJe hebt geen revive in je inventory."))
+                sender.sendMessage(formattedMessage("&cJe hebt geen teleport in je inventory."))
                 return
             }
 
-            if (GameManager.game?.getRole(target) == null) {
+            if (GameManager.game?.getRole(target) == null || GameManager.game?.getRole(secondTarget) == null) {
                 sender.sendMessage(formattedMessage("&cDie speler zit niet in het potje."))
                 return
             }
 
-            if (target.gameMode != GameMode.SPECTATOR && target.gameMode != GameMode.CREATIVE) {
-                sender.sendMessage(formattedMessage("&cDeze speler is niet dood."))
+            if (target.gameMode == GameMode.SPECTATOR || secondTarget.gameMode == GameMode.SPECTATOR) {
+                sender.sendMessage(formattedMessage("&cDeze speler is= dood."))
                 return
             }
 
-            target.sendMessage(formattedMessage("&aJe bent weer tot leven gewekt door ${sender.displayName}"))
-            sender.sendMessage(formattedMessage("&aJe hebt ${target.displayName} weer tot leven gewekt."))
-            target.teleport(sender.location)
+            Main.teleportRequests[target] = secondTarget
             item.amount -= 1
-            Main.reviveRequest.add(target)
         }
 
         fun give(player: Player) {
             player.inventory.addItem(
                 BookUtil.createBook(
-                    "Revive",
+                    "Teleport",
                     "Spelmaker",
                     listOf(
-                        "Dit is een Revive. Breng hiermee iemand terug uit de dood. Gebruik revive <spelernaam>",
+                        "Dit is een teleport. Teleporteer hier direct naar een andere speler. Gebruik door: teleport <speler> naar <speler>",
                         "ID: ${
                             Random.nextInt(10000, 99999)
                         }"
@@ -85,8 +78,5 @@ class ReviveUtil {
                 )
             )
         }
-
-
     }
-
 }

@@ -7,11 +7,9 @@ import nl.nilsrijkaart.widm.events.PvpEvent
 import nl.nilsrijkaart.widm.game.GameCommand
 import nl.nilsrijkaart.widm.gui.GameColorCommand
 import nl.nilsrijkaart.widm.util.ScoreboardUtil
-import nl.nilsrijkaart.widm.util.gameUtil.DeathNote
-import nl.nilsrijkaart.widm.util.gameUtil.GameUtilCommand
-import nl.nilsrijkaart.widm.util.gameUtil.InventoryCheck
-import nl.nilsrijkaart.widm.util.gameUtil.MsgCommand
+import nl.nilsrijkaart.widm.util.gameUtil.*
 import org.bukkit.Bukkit
+import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -20,6 +18,8 @@ class Main : JavaPlugin() {
     companion object {
         lateinit var plugin: JavaPlugin
         val deathRequest = mutableListOf<Player>()
+        val reviveRequest = mutableListOf<Player>()
+        val teleportRequests = mutableMapOf<Player, Player>()
     }
 
     override fun onEnable() {
@@ -39,7 +39,23 @@ class Main : JavaPlugin() {
             deathRequest.forEach {
                 it.health = 0.0
                 deathRequest.remove(it)
+
             }
+
+            reviveRequest.forEach {
+                it.health = 20.0
+                reviveRequest.remove(it)
+
+                it.gameMode = GameMode.SURVIVAL
+                it.health = 20.0
+                it.foodLevel = 20
+            }
+
+            teleportRequests.forEach { (player, target) ->
+                player.teleport(target)
+                teleportRequests.remove(player)
+            }
+
             Bukkit.getOnlinePlayers().forEach {
                 ScoreboardUtil.updateScoreboard(it)
             }
@@ -47,5 +63,7 @@ class Main : JavaPlugin() {
 
         DeathNote()
         InventoryCheck()
+        TeleportUtil()
+        ReviveUtil()
     }
 }
