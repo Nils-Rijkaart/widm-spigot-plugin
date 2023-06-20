@@ -76,6 +76,7 @@ class Game(val id: Int, var name: String) {
                     }
                     
                     player?.sendMessage(formattedMessage("&6Het potje is begonnen. Je bent de kleur &${it.color.code}${it.color.displayName}&6. Je rol is &7${it.role.displayName}&6. Succes!"))
+                    player?.sendTitle(formattedMessage("&c${it.role.displayName}"), formattedMessage("Je bent de kleur &${it.color.code}${it.color.displayName}"), 10, 200, 20)
                 }
             }
 

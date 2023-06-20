@@ -21,4 +21,4 @@ commands:
   msg:
     description: msg command
     usage: /<command>
-    aliases: [message, bericht, berichten, messages]
+    aliases: [message, bericht, berichten, messages, r]
