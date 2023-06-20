@@ -3,4 +3,3 @@ This is a plugin of a minecraft game based on the dutch television program and t
 
 If you happen to have any questions about this plugin, feel free to contact me on discord: nilsrijkaart.
 
-
