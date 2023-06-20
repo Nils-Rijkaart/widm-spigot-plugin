@@ -9,13 +9,17 @@ import nl.nilsrijkaart.widm.gui.GameColorCommand
 import nl.nilsrijkaart.widm.util.ScoreboardUtil
 import nl.nilsrijkaart.widm.util.gameUtil.DeathNote
 import nl.nilsrijkaart.widm.util.gameUtil.GameUtilCommand
+import nl.nilsrijkaart.widm.util.gameUtil.InventoryCheck
+import nl.nilsrijkaart.widm.util.gameUtil.MsgCommand
 import org.bukkit.Bukkit
+import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 
 class Main : JavaPlugin() {
 
     companion object {
         lateinit var plugin: JavaPlugin
+        val deathRequest = mutableListOf<Player>()
     }
 
     override fun onEnable() {
@@ -28,14 +32,20 @@ class Main : JavaPlugin() {
         getCommand("game")?.setExecutor(GameCommand())
         getCommand("gameutil")?.setExecutor(GameUtilCommand())
         getCommand("kleuren")?.setExecutor(GameColorCommand())
+        getCommand("msg")?.setExecutor(MsgCommand())
 
         // run every 5 seconds of the server
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, Runnable {
+            deathRequest.forEach {
+                it.health = 0.0
+                deathRequest.remove(it)
+            }
             Bukkit.getOnlinePlayers().forEach {
                 ScoreboardUtil.updateScoreboard(it)
             }
-        }, 0L, 600L)
+        }, 0L, 10L)
 
         DeathNote()
+        InventoryCheck()
     }
 }

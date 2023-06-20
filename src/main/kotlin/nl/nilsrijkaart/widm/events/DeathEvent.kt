@@ -20,12 +20,13 @@ class DeathEvent : Listener {
     @EventHandler
     fun onRespawn(event: PlayerRespawnEvent) {
         if (GameManager.game != null) {
-            val host = GameManager.game!!.hosts.first {
-                it.isOnline
+            if (GameManager.game!!.slots.any {
+                    it.player == event.player.uniqueId
+                }) {
+                event.player.gameMode = GameMode.SPECTATOR
+                event.player.sendMessage("§cJe bent dood gegaan :( Je kunt nu alleen nog maar toekijken. Respecteer hierbij de regels, ga niet verder kamers in dan de game is en kijk niet in kisten.")
+                return
             }
-            event.player.teleport(host.location)
-            event.player.gameMode = GameMode.SPECTATOR
-            event.player.sendMessage("§cJe bent dood gegaan :( Je kunt nu alleen nog maar toekijken. Respecteer hierbij de regels, ga niet verder kamers in dan de game is en kijk niet in kisten.")
         }
     }
 }

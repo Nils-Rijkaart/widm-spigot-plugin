@@ -1,5 +1,6 @@
 package nl.nilsrijkaart.widm.util.gameUtil
 
+import nl.nilsrijkaart.widm.Main
 import nl.nilsrijkaart.widm.events.ChatEvent
 import nl.nilsrijkaart.widm.game.GameManager
 import nl.nilsrijkaart.widm.game.GameRule
@@ -8,6 +9,7 @@ import nl.nilsrijkaart.widm.util.formattedMessage
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.meta.BookMeta
+import kotlin.random.Random
 
 class DeathNote {
     companion object {
@@ -51,12 +53,9 @@ class DeathNote {
                 return
             }
 
-            try {
-                // possible async error
-                target.health = 0.0
-                item.amount -= 1
-            } catch (_: Exception) {
-            }
+
+            item.amount -= 1
+            Main.deathRequest.add(target)
         }
 
 
@@ -65,7 +64,12 @@ class DeathNote {
                 BookUtil.createBook(
                     "Deathnote",
                     "Spelmaker",
-                    listOf("Dit is een deathnote. Gebruik deze deathnote om een speler direct dood te maken. Je gebruikt dit boekje door in chat te typen: deathnote <spelernaam>")
+                    listOf(
+                        "Dit is een deathnote. Gebruik deze deathnote om een speler direct dood te maken. Je gebruikt dit boekje door in chat te typen: deathnote <spelernaam>.",
+                        "ID: ${
+                            Random.nextInt(10000, 99999)
+                        }"
+                    )
                 )
             )
         }
