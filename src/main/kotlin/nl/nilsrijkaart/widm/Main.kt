@@ -39,18 +39,16 @@ class Main : JavaPlugin() {
             deathRequest.forEach {
                 it.health = 0.0
                 deathRequest.remove(it)
-
             }
 
             reviveRequest.forEach {
                 it.first.health = 20.0
-                reviveRequest.remove(it)
-
                 it.first.gameMode = GameMode.SURVIVAL
                 it.first.health = 20.0
                 it.first.foodLevel = 20
                 it.first.inventory.clear()
                 it.first.teleport(it.second)
+                reviveRequest.remove(it)
             }
 
             teleportRequests.forEach { (player, target) ->

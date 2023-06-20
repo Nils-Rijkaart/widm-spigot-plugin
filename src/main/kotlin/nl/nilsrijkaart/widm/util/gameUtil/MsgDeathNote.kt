@@ -29,7 +29,7 @@ class MsgDeathNote {
                         return@hookChat
                     }
 
-                    val target = Bukkit.getPlayer(message.split(" ")[1])
+                    val target = Bukkit.getPlayer(message.split(" ")[2])
                     if (target == null) {
                         player.sendMessage(formattedMessage("&cDeze speler bestaat niet."))
                         return@hookChat
