@@ -25,8 +25,6 @@ enum class GameRole(val displayName: String, val item: Material) {
         Material.SKELETON_SKULL
     ),
     PEACE_KEEPER("Peacekeeper", Material.GOLD_NUGGET);
-
-
     fun next(): GameRole {
         val values = values()
         val nextOrdinal = (ordinal + 1) % values.size

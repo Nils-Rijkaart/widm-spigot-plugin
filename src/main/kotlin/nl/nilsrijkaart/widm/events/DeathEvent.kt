@@ -4,6 +4,7 @@ import nl.nilsrijkaart.widm.Main
 import nl.nilsrijkaart.widm.game.GameManager
 import nl.nilsrijkaart.widm.game.GameRule
 import nl.nilsrijkaart.widm.util.locationDataToSpigotLocation
+import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -18,6 +19,22 @@ class DeathEvent : Listener {
         if (GameManager.game?.rules?.get(GameRule.DEATH_MESSAGE) != true) {
             event.deathMessage = null
             return
+        }
+
+        val deathGameSlot = GameManager.game!!.slots.find {
+            it.player == event.entity.uniqueId
+        }
+
+        GameManager.game!!.slots.filter {
+            it.player != event.entity.uniqueId && it.soulBounds?.contains(deathGameSlot?.color) == true
+        }.forEach {
+
+            if (it.player != null && Bukkit.getPlayer(it.player!!)?.gameMode != GameMode.SPECTATOR && Bukkit.getPlayer(it.player!!)?.health != 0.0) {
+                Bukkit.getPlayer(it.player!!)?.health = 0.0
+                GameManager.game!!.hosts.forEach { uuid ->
+                    Bukkit.getPlayer(uuid)?.sendMessage("§c${Bukkit.getPlayer(it.player!!)?.name} is dood gegaan door een soulbound op ${event.entity.name}")
+                }
+            }
         }
     }
 
@@ -40,6 +57,7 @@ class DeathEvent : Listener {
                 object : BukkitRunnable() {
                     override fun run() {
                         spawnLocation?.let { event.player.teleport(it) }
+
 
                     }
                 }.runTaskLater(Main.plugin, 2)

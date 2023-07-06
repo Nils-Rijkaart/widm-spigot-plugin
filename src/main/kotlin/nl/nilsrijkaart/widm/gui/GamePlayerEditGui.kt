@@ -46,7 +46,14 @@ class GamePlayerEditGui {
                 "&aZet de locatie",
                 listOf("Verander de locatie naar je huidige plek")
             ) {
-                gameSlot.location = LocationData(player.location.world?.name?: "world", player.location.x, player.location.y, player.location.z, player.location.yaw, player.location.pitch)
+                gameSlot.location = LocationData(
+                    player.location.world?.name ?: "world",
+                    player.location.x,
+                    player.location.y,
+                    player.location.z,
+                    player.location.yaw,
+                    player.location.pitch
+                )
                 game.updateSlot(gameSlot)
                 game.save()
                 player.closeInventory()
@@ -84,6 +91,18 @@ class GamePlayerEditGui {
                         player.sendMessage(formattedMessage("&6Speler &7${targetName} &6bestaat niet."))
                     }
                 }
+            }
+
+            val soulBoundLore = if (gameSlot.soulBounds?.isEmpty() == true || gameSlot.soulBounds == null) {
+                listOf("&7Geen soulbounds")
+            } else {
+                gameSlot.soulBounds!!.map { soulbound ->
+                    "&7- &${soulbound.code}${soulbound.displayName}"
+                }
+            }
+
+            inventory.addItem(-1, Material.REDSTONE, "&6Soulbounds", soulBoundLore) {
+                SoulBoundGui.open(game, player, gameSlot)
             }
 
 
