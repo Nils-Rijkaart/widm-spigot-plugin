@@ -12,7 +12,7 @@ class GameListGui {
         fun open(player: Player) {
 
             val games = GameService.getGames(player)
-            val inventory = MoleGui("Games", 27)
+            val inventory = MoleGui("Games", 36)
 
             games.forEach {
                 val lore = mutableListOf<String>()
@@ -30,6 +30,10 @@ class GameListGui {
                 clickEvent.isCancelled = true
                 GameService.createGame(player)
                 open(player)
+            }
+
+            inventory.addItem(35, Material.GOLD_BLOCK, "&6Rollen beheren", listOf()) { clickEvent ->
+                clickEvent.isCancelled = true
             }
 
             inventory.open(player)

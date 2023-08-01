@@ -24,10 +24,19 @@ enum class GameRole(val displayName: String, val item: Material) {
         "Egoïst",
         Material.SKELETON_SKULL
     ),
-    PEACE_KEEPER("Peacekeeper", Material.GOLD_NUGGET);
+    PEACE_KEEPER("Peacekeeper", Material.GOLD_NUGGET),
+    ATHEIST("Atheïst", Material.BONE),
+    JEZUS("Jezus", Material.GOLDEN_BOOTS),
+    JOOD("Jood", Material.GOLDEN_APPLE),
+    HITLER("Hitler", Material.DIAMOND_SWORD),
+    LUCIFER("Lucifer", Material.NETHER_STAR),
+    MOZES("Mozes", Material.STICK);
+
     fun next(): GameRole {
         val values = values()
         val nextOrdinal = (ordinal + 1) % values.size
         return values[nextOrdinal]
     }
 }
+
+//data class GameRole(val displayName : String, val item : Material)
