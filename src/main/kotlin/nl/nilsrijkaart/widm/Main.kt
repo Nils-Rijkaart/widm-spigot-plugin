@@ -6,6 +6,8 @@ import nl.nilsrijkaart.widm.events.EventJoin
 import nl.nilsrijkaart.widm.events.PvpEvent
 import nl.nilsrijkaart.widm.game.GameCommand
 import nl.nilsrijkaart.widm.gui.GameColorCommand
+import nl.nilsrijkaart.widm.service.PlayerService
+import nl.nilsrijkaart.widm.service.StatisticCommand
 import nl.nilsrijkaart.widm.util.ScoreboardUtil
 import nl.nilsrijkaart.widm.util.gameUtil.*
 import org.bukkit.Bukkit
@@ -22,6 +24,10 @@ class Main : JavaPlugin() {
         val teleportRequests = mutableMapOf<Player, Player>()
     }
 
+    override fun onDisable() {
+        PlayerService.save()
+    }
+
     override fun onEnable() {
         plugin = this
         Bukkit.getPluginManager().registerEvents(EventJoin(), this)
@@ -33,6 +39,7 @@ class Main : JavaPlugin() {
         getCommand("gameutil")?.setExecutor(GameUtilCommand())
         getCommand("kleuren")?.setExecutor(GameColorCommand())
         getCommand("msg")?.setExecutor(MsgCommand())
+        getCommand("statistieken")?.setExecutor(StatisticCommand())
 
         // run every 5 seconds of the server
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, Runnable {

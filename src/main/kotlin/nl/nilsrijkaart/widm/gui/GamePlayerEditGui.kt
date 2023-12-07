@@ -28,6 +28,37 @@ class GamePlayerEditGui {
                 open(player, game, gameSlot)
             }
 
+
+            if(gameSlot.peacekeeper) {
+                inventory.addItem(
+                    -1,
+                    Material.NETHERITE_SWORD,
+                    "&aPeacekeeper",
+                    listOf("&aDeze speler is",
+                        "&aeen peacekeeper.")
+                ) {
+                    it.isCancelled = true
+                    gameSlot.peacekeeper = false
+                    game.updateSlot(gameSlot)
+                    game.save()
+                    open(player, game, gameSlot)
+                }
+            } else {
+                inventory.addItem(
+                    -1,
+                    Material.NETHERITE_SWORD,
+                    "&cPeacekeeper",
+                    listOf("&cDeze speler is nu",
+                        "&cgeen peacekeeper.")
+                ) {
+                    it.isCancelled = true
+                    gameSlot.peacekeeper = true
+                    game.updateSlot(gameSlot)
+                    game.save()
+                    open(player, game, gameSlot)
+                }
+
+            }
             inventory.addItem(
                 -1,
                 gameSlot.color.material,

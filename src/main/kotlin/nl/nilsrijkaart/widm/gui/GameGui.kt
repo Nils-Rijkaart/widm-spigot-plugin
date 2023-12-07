@@ -70,13 +70,15 @@ class GameGui {
 
             inventory.addItem(5, Material.RED_WOOL, "&cPotje stoppen", listOf()) { clickEvent ->
                 clickEvent.isCancelled = true
-                GameManager.game = null
-                player.closeInventory()
-                Bukkit.broadcastMessage("§cHet potje is afgelopen.")
+                GameEndGui.open(game, player)
             }
 
             inventory.addItem(6, Material.BARRIER, "&cPotje verwijderen", listOf()) {clickEvent ->
                 clickEvent.isCancelled = true
+                if(GameManager.game == game) {
+                    player.sendMessage("§cJe kan geen potje verwijderen die bezig is.")
+                    return@addItem
+                }
                 GameService.deleteGame(game)
                 Bukkit.broadcastMessage("§cHet potje is verwijderd.")
                 GameListGui.open(player)

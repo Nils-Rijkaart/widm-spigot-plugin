@@ -16,9 +16,13 @@ commands:
     aliases: [widmutil, widmgameutil]
   kleuren:
     description: Zie alle kleuren
-    usage: /<command>
+    usage: /<command>0
     aliases: [rollen, colors, roles]
   msg:
     description: msg command
     usage: /<command>
     aliases: [message, bericht, berichten, messages, r, t, tell]
+  statistieken:
+    description: Zie je statistieken!
+    usage: /<command>
+    aliases: [stats, statistics, stat, statis]

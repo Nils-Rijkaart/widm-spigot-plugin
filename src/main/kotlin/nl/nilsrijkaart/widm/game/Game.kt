@@ -52,6 +52,10 @@ class Game(val id: Int, var name: String) {
         return slots.find { it.player == player.uniqueId }?.role
     }
 
+    fun isPeacekeeper(player: Player): Boolean {
+        return slots.find { it.player == player.uniqueId }?.peacekeeper ?: false
+    }
+
     fun assignRandomRole(player: Player): Boolean {
         val gameSlot = slots.find { it.player == null }
         if (gameSlot != null) {

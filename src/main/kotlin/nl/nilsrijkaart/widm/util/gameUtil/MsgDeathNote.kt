@@ -55,8 +55,7 @@ class MsgDeathNote {
                 return
             }
 
-            val targetRole = GameManager.game?.getRole(target)
-            if (targetRole == GameRole.PEACE_KEEPER && GameManager.game?.rules?.get(GameRule.PK_DEATHNOTE) == false) {
+            if (GameManager.game?.isPeacekeeper(target) == true && GameManager.game?.rules?.get(GameRule.PK_DEATHNOTE) == false) {
                 sender.sendMessage(formattedMessage("&cJe mag geen peacekeeper deathnoten."))
                 return
             }

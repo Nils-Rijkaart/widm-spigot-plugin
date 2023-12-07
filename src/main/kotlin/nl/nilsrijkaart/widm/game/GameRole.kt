@@ -16,7 +16,6 @@ enum class GameColor(val displayName: String, val code: Char, val material: Mate
     BROWN("Bruin", '6', Material.BROWN_WOOL),
     MAGENTA("Magenta", 'd', Material.MAGENTA_WOOL),
     GREEN("Groen", '2', Material.GREEN_WOOL),
-
 }
 
 enum class GameRole(val displayName: String, val item: Material) {
@@ -24,7 +23,6 @@ enum class GameRole(val displayName: String, val item: Material) {
         "Egoïst",
         Material.SKELETON_SKULL
     ),
-    PEACE_KEEPER("Peacekeeper", Material.GOLD_NUGGET),
     ATHEIST("Atheïst", Material.BONE),
     JEZUS("Jezus", Material.GOLDEN_BOOTS),
     JOOD("Jood", Material.GOLDEN_APPLE),
